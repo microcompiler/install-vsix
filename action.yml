@@ -1,0 +1,12 @@
+name: 'Install a Visual Studio Extension' 
+description: 'Download the latest version of each extension and install it in all supported versions of Visual Studio'
+inputs:
+  packagename: 
+    description:  'Package names from the Visual Studio Marketplace URL itemName parameter'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - id: vsix
+      run: ${{ github.action_path }}/install-vsix.ps1 -PackageName ${{ inputs.packagename }} 
+      shell: pwsh
