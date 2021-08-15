@@ -28,6 +28,8 @@ jobs:
 
     - name: Setup nuget
       uses: nuget/setup-nuget@v1
-    
-    - name: Install Visual Studio Extension
-      uses: microcompiler/install-vsix@v1
+      
+    - uses: microcompiler/install-vsix@v1
+      with: 
+        packagename: 'nanoframework.nanoFramework-VS2019-Extension'
+          
