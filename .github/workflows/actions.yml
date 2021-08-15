@@ -17,8 +17,7 @@ env:
 jobs: 
   Build:
     name: Example Action  
-    runs-on: 
-    -windows-latest
+    runs-on: windows-latest
     
     steps:
     - name: Checkout
