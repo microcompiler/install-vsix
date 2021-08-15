@@ -29,7 +29,7 @@ jobs:
     - name: Setup nuget
       uses: nuget/setup-nuget@v1
       
-    - uses: microcompiler/install-vsix@v1
+    - uses: microcompiler/install-vsix@main
       with: 
         packagename: 'nanoframework.nanoFramework-VS2019-Extension'
           
