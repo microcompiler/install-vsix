@@ -30,5 +30,4 @@ jobs:
       uses: nuget/setup-nuget@v1
     
     - name: Install Visual Studio Extension
-    - uses: actions/checkout@v2
       uses: microcompiler/install-vsix@v1
