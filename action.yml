@@ -8,6 +8,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - id: vsix
-      run: ${{ github.action_path }}/install-vsix.ps1 -PackageName ${{ inputs.packagename }} 
-      shell: pwsh
+    run: ${{ github.action_path }}/install-vsix.ps1 -PackageName ${{ inputs.packagename }} 
+    shell: pwsh
