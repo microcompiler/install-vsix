@@ -4,6 +4,7 @@ inputs:
   packagename: 
     description:  'Package names from the Visual Studio Marketplace URL itemName parameter'
     required: true
+    default: ''
 runs:
   using: "composite"
   steps:
