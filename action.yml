@@ -7,6 +7,6 @@ inputs:
     default: ''
 runs:
   using: "composite"
-  steps:
-    run: ${{ github.action_path }}/install-vsix.ps1 -PackageName ${{ inputs.packagename }} 
-    shell: pwsh
+    steps:
+      run: ${{ github.action_path }}/install-vsix.ps1 -PackageName ${{ inputs.packagename }} 
+      shell: pwsh
