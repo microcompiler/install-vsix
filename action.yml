@@ -20,7 +20,7 @@ runs:
         $VSInstallDir = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\resources\app\ServiceHub\Services\Microsoft.VisualStudio.Setup.Service"
         
         if (-Not $VSInstallDir) {
-          Write-Error "Visual Studio InstallDir registry key missing"
+          Write-Error "Visual Studio install directory is missing"
           Exit 1
         }
 
@@ -36,6 +36,7 @@ runs:
           Write-Error "Could not find download anchor tag on the Visual Studio Extensions page"
           Exit 1
         }
+
         Write-Host "Anchor is $($anchor)"
         $href = "$($baseProtocol)//$($baseHostName)$($anchor)"
         Write-Host "Href is $($href)"
@@ -45,10 +46,11 @@ runs:
           Write-Error "Downloaded VSIX file could not be located"
           Exit 1
         }
+
         Write-Host "VSInstallDir is $($VSInstallDir)"
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
-        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a $($VsixLocation)" -Wait
+        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a /skuName:Enterprise /skuVersion:16.10.4 $($VsixLocation)" -Wait
         
         Write-Host "Cleanup..."
         rm $VsixLocation
