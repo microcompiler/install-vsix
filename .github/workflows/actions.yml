@@ -33,8 +33,7 @@ jobs:
         if ($path) {
           & $path $args
         }
-        Write-Host $path
-
+    
     - name: Show Visual Studio locator information
       run: vswhere.exe
 
