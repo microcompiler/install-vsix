@@ -11,7 +11,7 @@ runs:
     - id: vsix
       shell: pwsh
       run: |
-            Write-Output${{ inputs.packagename }}
-            Write-Output${{ inputs.packagename }}
-            Write-Output${{ inputs.packagename }}
-            Write-Output${{ inputs.packagename }}
+        Write-Output ${{ inputs.packagename }}
+        Write-Output ${{ inputs.packagename }}
+        Write-Output ${{ inputs.packagename }}
+        Write-Output ${{ inputs.packagename }}
