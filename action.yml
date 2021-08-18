@@ -17,13 +17,12 @@ runs:
         $Uri = "$($baseProtocol)//$($baseHostName)/items?itemName=${{ inputs.packagename }}"
         $VsixLocation = "$($env:Temp)\$([guid]::NewGuid()).vsix"
         
-        $VSIXInstaller = vswhere.exe -latest -prerelease -products * -property enginePath | Join-Path -ChildPath 'VSIXInstaller.exe'
+        $VSInstallDir = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\resources\app\ServiceHub\Services\Microsoft.VisualStudio.Setup.Service"
         
-        if (-Not $VSIXInstaller) {
-          Write-Error "Visual Studio install extention installer is missing"
+        if (-Not $VSInstallDir) {
+          Write-Error "Visual Studio install directory is missing"
           Exit 1
         }
-
         Write-Host "Grabbing VSIX extension at $($Uri)"
         $HTML = Invoke-WebRequest -Uri $Uri -UseBasicParsing -SessionVariable session
         
@@ -31,12 +30,10 @@ runs:
         $anchor = $HTML.Links |
         Where-Object { $_.class -eq 'install-button-container' } |
         Select-Object -ExpandProperty href
-
         if (-Not $anchor) {
           Write-Error "Could not find download anchor tag on the Visual Studio Extensions page"
           Exit 1
         }
-
         Write-Host "Anchor is $($anchor)"
         $href = "$($baseProtocol)//$($baseHostName)$($anchor)"
         Write-Host "Href is $($href)"
@@ -46,12 +43,13 @@ runs:
           Write-Error "Downloaded VSIX file could not be located"
           Exit 1
         }
-
+        Write-Host "VSInstallDir is $($VSInstallDir)"
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
-           
-        & $VSIXInstaller  "/q /a $($VsixLocation)"
-
+        $path = C:\ProgramData\Chocolatey\bin\vswhere.exe -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
+        if ($path) {
+           Start-Process -Filepath $path -ArgumentList "/q /a $($VsixLocation)" -Wait
+        }
         Write-Host "Cleanup..."
         rm $VsixLocation
         
