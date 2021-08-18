@@ -17,9 +17,9 @@ runs:
         $Uri = "$($baseProtocol)//$($baseHostName)/items?itemName=${{ inputs.packagename }}"
         $VsixLocation = "$($env:Temp)\$([guid]::NewGuid()).vsix"
         
-        $VSInstallDir = vswhere.exe -latest -prerelease -products * -property enginePath | Join-Path -ChildPath 'VSIXInstaller.exe'
+        $VSIXInstaller = vswhere.exe -latest -prerelease -products * -property enginePath | Join-Path -ChildPath 'VSIXInstaller.exe'
         
-        if (-Not $VSInstallDir) {
+        if (-Not $VSIXInstaller) {
           Write-Error "Visual Studio install extention installer is missing"
           Exit 1
         }
@@ -47,13 +47,12 @@ runs:
           Exit 1
         }
 
-        Write-Host "VSInstallDir is $($VSInstallDir)"
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
 
         $args = "/q /a $($VsixLocation)"
-        if (Test-Path $path) {
-           & $path $args
+        if (Test-Path $VSIXInstaller) {
+           & $VSIXInstaller $args
         }
 
         Write-Host "Cleanup..."
