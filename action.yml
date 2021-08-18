@@ -11,8 +11,6 @@ runs:
     - id: vsix
       shell: pwsh
       run: |
-        Install-ChocolateyVsixPackage -PackageName ${{ inputs.packagename }}
-              
         $baseProtocol = "https:"
         $baseHostName = "marketplace.visualstudio.com"
         
@@ -52,7 +50,7 @@ runs:
         Write-Host "VSInstallDir is $($VSInstallDir)"
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
-        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a /skuName:Enterprise /skuVersion:16.10.4 $($VsixLocation)" -Wait
+        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a /skuName:Enterprise $($VsixLocation)" -Wait
         
         Write-Host "Cleanup..."
         rm $VsixLocation
