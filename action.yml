@@ -11,6 +11,8 @@ runs:
     - id: vsix
       shell: pwsh
       run: |
+        Install-ChocolateyVsixPackage -PackageName ${{ inputs.packagename }}
+              
         $baseProtocol = "https:"
         $baseHostName = "marketplace.visualstudio.com"
         
