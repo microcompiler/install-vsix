@@ -17,10 +17,10 @@ runs:
         $Uri = "$($baseProtocol)//$($baseHostName)/items?itemName=${{ inputs.packagename }}"
         $VsixLocation = "$($env:Temp)\$([guid]::NewGuid()).vsix"
         
-        $VSInstallDir = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\resources\app\ServiceHub\Services\Microsoft.VisualStudio.Setup.Service"
+        $VSInstallDir = vswhere.exe -latest -prerelease -products * -property enginePath | Join-Path -ChildPath 'VSIXInstaller.exe'
         
         if (-Not $VSInstallDir) {
-          Write-Error "Visual Studio install directory is missing"
+          Write-Error "Visual Studio install extention installer is missing"
           Exit 1
         }
 
@@ -51,10 +51,7 @@ runs:
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
 
-        $path = C:\ProgramData\Chocolatey\bin\vswhere.exe -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
-        if ($path) {
-           Start-Process -Filepath $path -ArgumentList "/q /a $($VsixLocation)" -Wait
-        }
+        Start-Process -Filepath $path -ArgumentList "/q /a $($VsixLocation)" -Wait
 
         Write-Host "Cleanup..."
         rm $VsixLocation
