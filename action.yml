@@ -52,7 +52,7 @@ runs:
         Write-Host "Installing ${{ inputs.packagename }}..."
 
         if (Test-Path $path) {
-           $path "/q /a $($VsixLocation)"
+           $path /q /a $($VsixLocation)
         }
 
         Write-Host "Cleanup..."
