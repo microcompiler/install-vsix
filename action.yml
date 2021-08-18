@@ -50,7 +50,7 @@ runs:
         Write-Host "VSInstallDir is $($VSInstallDir)"
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
-        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a /skuName:Enterprise $($VsixLocation)" -Wait
+        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a $($VsixLocation)" -Wait
         
         Write-Host "Cleanup..."
         rm $VsixLocation
