@@ -11,7 +11,15 @@ runs:
     - id: vsix
       shell: pwsh
       run: |
-        Write-Output ${{ inputs.packagename }}
-        Write-Output ${{ inputs.packagename }}
-        Write-Output ${{ inputs.packagename }}
-        Write-Output ${{ inputs.packagename }}
+        $baseProtocol = "https:"
+        $baseHostName = "marketplace.visualstudio.com"
+        
+        $Uri = "$($baseProtocol)//$($baseHostName)/items?itemName=${{ inputs.packagename }}"
+        $VsixLocation = "$($env:Temp)\$([guid]::NewGuid()).vsix"
+        
+        $VSInstallDir = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\resources\app\ServiceHub\Services\Microsoft.VisualStudio.Setup.Service"
+        
+        if (-Not $VSInstallDir) {
+          Write-Error "Visual Studio InstallDir registry key missing"
+          Exit 1
+        }
