@@ -51,8 +51,9 @@ runs:
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
 
+        $args = "/q /a $($VsixLocation)"
         if (Test-Path $path) {
-           $path /q /a $($VsixLocation)
+           & $path $args
         }
 
         Write-Host "Cleanup..."
