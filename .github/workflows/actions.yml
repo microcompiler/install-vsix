@@ -24,7 +24,16 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1.0.2    
+      uses: microsoft/setup-msbuild@v1.0.2
+      
+    - name: Show msbuild path
+      shell: pwsh
+      run: |      
+        $path = C:\ProgramData\Chocolatey\bin\vswhere.exe -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
+        if ($path) {
+          & $path $args
+        }
+        Write-Host $path
 
     - name: Show Visual Studio locator information
       run: vswhere.exe
