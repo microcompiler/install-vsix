@@ -10,21 +10,7 @@ runs:
   steps:
     - id: vsix
       shell: pwsh
-      run: |
-        $path = vswhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
-        if ($path) {
-          & $path $args
-        }
-        Write-Host $path
-
-        $path2 = vswhere -latest -prerelease -products * -property enginePath | Join-Path -ChildPath 'VSIXInstaller.exe'
-
-          if (Test-Path $path) {
-            & $path $args
-          }
-        }
-        Write-Host $path2
-      
+      run: |      
         $baseProtocol = "https:"
         $baseHostName = "marketplace.visualstudio.com"
         
@@ -64,9 +50,14 @@ runs:
         Write-Host "VSInstallDir is $($VSInstallDir)"
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
+<<<<<<< HEAD
         Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a /skuName:Enterprise /skuVersion:16.10.4 $($VsixLocation)" -Wait
+=======
+        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a $($VsixLocation)" -Wait
+>>>>>>> 0deeef0e5d7ed636706b9b6e2a121f2b76c0768e
         
         Write-Host "Cleanup..."
         rm $VsixLocation
         
         Write-Host "Installation of ${{ inputs.packagename }} complete!"
+        
