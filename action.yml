@@ -11,6 +11,20 @@ runs:
     - id: vsix
       shell: pwsh
       run: |      
+        $path = C:\ProgramData\Chocolatey\bin\vswhere.exe -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
+        if ($path) {
+          & $path $args
+        }
+        Write-Host $path
+
+        $path2 = C:\ProgramData\Chocolatey\bin\vswhere.exe -latest -prerelease -products * -property enginePath | Join-Path -ChildPath 'VSIXInstaller.exe'
+
+          if (Test-Path $path) {
+            & $path $args
+          }
+        }
+        Write-Host $path2  
+      
         $baseProtocol = "https:"
         $baseHostName = "marketplace.visualstudio.com"
         
@@ -60,4 +74,4 @@ runs:
         rm $VsixLocation
         
         Write-Host "Installation of ${{ inputs.packagename }} complete!"
-        
+
