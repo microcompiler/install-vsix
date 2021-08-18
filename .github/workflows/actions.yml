@@ -24,14 +24,14 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1.0.2
-      
-    - name: Show vmwhere
-      uses: microsoft/setup-msbuild@v1.0.2   
+      uses: microsoft/setup-msbuild@v1.0.2    
 
-    - name: Setup nuget
+    - name: Show Visual Studio locator information
       working-directory: \ProgramData\Chocolatey\bin\
       run: vswhere.exe
+
+    - name: Setup nuget
+      uses: nuget/setup-nuget@v1
       
     - uses: microcompiler/install-vsix@main
       with: 
