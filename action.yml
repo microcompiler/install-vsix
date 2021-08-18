@@ -51,10 +51,12 @@ runs:
         Write-Host "VsixLocation is $($VsixLocation)"
         Write-Host "Installing ${{ inputs.packagename }}..."
 
-        Start-Process -Filepath "$($VSInstallDir)\VSIXInstaller" -ArgumentList "/q /a /skuName:Enterprise /skuVersion:16.10.31515.178 $($VsixLocation)" -Wait
-        
+        $path = C:\ProgramData\Chocolatey\bin\vswhere.exe -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
+        if ($path) {
+           Start-Process -Filepath $path -ArgumentList "/q /a $($VsixLocation)" -Wait
+        }
+
         Write-Host "Cleanup..."
         rm $VsixLocation
         
         Write-Host "Installation of ${{ inputs.packagename }} complete!"
-
